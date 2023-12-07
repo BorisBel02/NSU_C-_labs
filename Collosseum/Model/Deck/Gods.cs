@@ -1,11 +1,12 @@
 namespace Colloseum.Model.Deck;
 
-public class Gods
+public class Gods : IGods
 {
-    private Card[] Cards { get; set; }
+    private Card[] Cards { get; set; }//maybe it would be better to create new class for the Deck
 
     public Gods()
     {
+        //deck initialization
         var deck = new Card[36];
         int num = 0;
         foreach (Suit s in Enum.GetValues(typeof(Suit)))
