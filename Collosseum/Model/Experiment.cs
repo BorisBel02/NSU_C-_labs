@@ -11,12 +11,15 @@ public class Experiment
    private Fighter _Elon;
    private Fighter _Mark;
 
-   public Experiment()
+   public Experiment(
+      Fighter elon,
+      Fighter mark,
+      Gods gods
+      )
    {
-      _gods = Deck.Gods.GetInstance();
-
-      _Elon = new Fighter();
-      _Mark = new Fighter();
+      _gods = gods;
+      _Elon = elon;
+      _Mark = mark;
    }
 
    public bool Run()

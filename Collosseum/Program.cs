@@ -1,20 +1,23 @@
-﻿
+﻿using Colloseum;
 using Colloseum.Model;
+using Colloseum.Model.Deck;
+using Colloseum.Model.Fighters;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-
-
-int iterations = 1000000;
-
-double wins = 0;
-
-Experiment experiment = new();
-
-for (int i = 0; i <= iterations; ++i)
+internal sealed class Program
 {
-    if (experiment.Run())
+    private static async Task Main(string[] args)
     {
-        ++wins;
+        await Host.CreateDefaultBuilder(args)
+            .ConfigureServices(((hostContext, services) =>
+            {
+                services.AddHostedService<ExperimentWorker>();
+                services.AddScoped<Experiment>();
+                services.AddTransient<Fighter>();
+                services.AddSingleton<Gods>();
+            }))
+            .Build()
+            .RunAsync();
     }
 }
-
-Console.WriteLine("p = " + (wins/iterations));
