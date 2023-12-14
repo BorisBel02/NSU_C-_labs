@@ -1,0 +1,26 @@
+Index: CollosseumTest/obj/rider.project.model.nuget.info
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>17019497182946388
+===================================================================
+diff --git a/CollosseumTest/obj/rider.project.model.nuget.info b/CollosseumTest/obj/rider.project.model.nuget.info
+--- a/CollosseumTest/obj/rider.project.model.nuget.info	
++++ b/CollosseumTest/obj/rider.project.model.nuget.info	
+@@ -1,1 +1,1 @@
+-17019497182946388
+\ No newline at end of file
++17025378570666383
+\ No newline at end of file
+Index: CollosseumTest/obj/rider.project.restore.info
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>17019497182946388
+===================================================================
+diff --git a/CollosseumTest/obj/rider.project.restore.info b/CollosseumTest/obj/rider.project.restore.info
+--- a/CollosseumTest/obj/rider.project.restore.info	
++++ b/CollosseumTest/obj/rider.project.restore.info	
+@@ -1,1 +1,1 @@
+-17019497182946388
+\ No newline at end of file
++17025378570666383
+\ No newline at end of file
