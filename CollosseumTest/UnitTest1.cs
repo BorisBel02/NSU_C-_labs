@@ -1,6 +1,11 @@
+using Col.DB;
 using Colloseum.Model;
 using Colloseum.Model.Deck;
 using Colloseum.Model.Fighters;
+using CollosseumTest;
+using DB.Entity;
+using DB.Mapper;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 
 namespace Test;
@@ -91,5 +96,41 @@ public class Tests
         experiment.Run();
         
         godsMock.Verify(s => s.Shuffle(), Times.Once);
+    }
+
+    [Test]
+    public void DataBaseTest()
+    {
+        using var dbContext = new Context();
+        IGods gods = new Gods();
+        var experimentCondition = new ExperimentConditionEntity
+        {
+            Deck = CardMapper.MapRangeCardEntity(gods.GetDeck())
+        };
+
+        dbContext.Experiments.Add(experimentCondition);
+        dbContext.SaveChanges();
+
+            
+        var conditions = dbContext.Experiments
+            .Include(experimentConditionEntity => experimentConditionEntity.Deck).ToList();
+            
+        Assert.That(conditions, Has.Count.EqualTo(1));
+
+        var savedDeck = conditions[0].Deck;
+        Assert.That(savedDeck, Has.Count.EqualTo(36));
+
+        for (int i = 0; i < 36; i++)
+        {
+            var card = gods.GetDeck()[i];
+            var savesCard = savedDeck[i];
+                
+            Assert.Multiple(() =>
+            {
+                Assert.That(card.CardColour, Is.EqualTo(savesCard.CardColour));
+                Assert.That(card.CardValue, Is.EqualTo(savesCard.CardValue));
+                Assert.That(card.CardSuit, Is.EqualTo(savesCard.CardSuit));
+            });
+        }
     }
 }

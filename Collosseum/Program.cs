@@ -1,4 +1,5 @@
-﻿using Colloseum;
+﻿using Col.DB;
+using Colloseum;
 using Colloseum.Model;
 using Colloseum.Model.Deck;
 using Colloseum.Model.Fighters;
@@ -12,10 +13,11 @@ internal sealed class Program
         await Host.CreateDefaultBuilder(args)
             .ConfigureServices(((hostContext, services) =>
             {
-                services.AddHostedService<ExperimentWorker>();
-                services.AddScoped<Experiment>();
-                services.AddTransient<Fighter>();
-                services.AddSingleton<Gods>();
+                services.AddHostedService<ExperimentWorkerSqlite>();
+                services.AddScoped<IConditionExperiment, ExperimentSqlite>();
+                services.AddTransient<IFighter, Fighter>();
+                services.AddSingleton<IGods, Gods>();
+                services.AddDbContext<Context>();
             }))
             .Build()
             .RunAsync();

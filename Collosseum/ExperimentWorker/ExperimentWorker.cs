@@ -7,10 +7,10 @@ public class ExperimentWorker : IHostedService
 {
     private readonly IHostApplicationLifetime _appLifeTime;
     
-    private Experiment _experiment;
+    private IExperiment _experiment;
 
     public ExperimentWorker(
-        Experiment experiment, 
+        IExperiment experiment, 
         IHostApplicationLifetime appLifeTime)
     {
         _experiment = experiment;
@@ -53,6 +53,6 @@ public class ExperimentWorker : IHostedService
 
     public async Task StopAsync(CancellationToken cancellationToken)
     {
-        Console.WriteLine("Stopping experiments");
+        
     }
 }
