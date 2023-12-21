@@ -103,22 +103,12 @@ public class Tests
     {
         using var dbContext = new Context();
         IGods gods = new Gods();
-        var experimentCondition = new ExperimentConditionEntity
-        {
-            Deck = CardMapper.MapRangeCardEntity(gods.GetDeck())
-        };
+        var repo = new Repo(dbContext);
+        
+        repo.SaveExperiment(gods.GetDeck());
 
-        dbContext.Experiments.Add(experimentCondition);
-        dbContext.SaveChanges();
-
-            
-        var conditions = dbContext.Experiments
-            .Include(experimentConditionEntity => experimentConditionEntity.Deck).ToList();
-            
-        Assert.That(conditions, Has.Count.EqualTo(1));
-
-        var savedDeck = conditions[0].Deck;
-        Assert.That(savedDeck, Has.Count.EqualTo(36));
+        Card[] savedDeck = repo.GetCondition(0);
+        Assert.That(savedDeck, Has.Length.EqualTo(36));
 
         for (int i = 0; i < 36; i++)
         {

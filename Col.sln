@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collosseum", "Collosseum\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollosseumTest", "CollosseumTest\CollosseumTest.csproj", "{1D99C2C9-4DFE-449E-87D9-5009D14082E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FighterService", "FighterService\FighterService.csproj", "{C33B697D-CD1D-46EE-A56B-FFEAA333878B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodsService", "GodsService\GodsService.csproj", "{3FD05A06-889F-4DFB-BB1F-88F10941EAC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{1D99C2C9-4DFE-449E-87D9-5009D14082E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D99C2C9-4DFE-449E-87D9-5009D14082E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D99C2C9-4DFE-449E-87D9-5009D14082E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C33B697D-CD1D-46EE-A56B-FFEAA333878B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C33B697D-CD1D-46EE-A56B-FFEAA333878B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C33B697D-CD1D-46EE-A56B-FFEAA333878B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C33B697D-CD1D-46EE-A56B-FFEAA333878B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FD05A06-889F-4DFB-BB1F-88F10941EAC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FD05A06-889F-4DFB-BB1F-88F10941EAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FD05A06-889F-4DFB-BB1F-88F10941EAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FD05A06-889F-4DFB-BB1F-88F10941EAC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

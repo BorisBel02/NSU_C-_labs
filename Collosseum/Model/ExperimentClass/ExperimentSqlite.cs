@@ -13,18 +13,18 @@ public class ExperimentSqlite : IConditionExperiment
     private IGods _gods;
     private IFighter _elon;
     private IFighter _mark;
-    private Context _db;
+    private Repo _repo;
     
     public ExperimentSqlite(
         IGods gods,
         IFighter elon,
         IFighter mark,
-        Context db)
+        Repo repo)
     {
         _gods = gods;
         _elon = elon;
         _mark = mark;
-        _db = db;
+        _repo = repo;
     }
     public bool Run()
     {
@@ -33,16 +33,8 @@ public class ExperimentSqlite : IConditionExperiment
         Array.Copy(_gods.GetDeck(), 0, _elon.FighterCards, 0, _gods.GetDeck().Length / 2);
         Array.Copy(_gods.GetDeck(), _gods.GetDeck().Length / 2, _mark.FighterCards,
             0, _gods.GetDeck().Length / 2);
-        //well, maybe i could just use ArrayList instead of simple array...
-
-        var cardEntityList = CardMapper.MapRangeCardEntity(_gods.GetDeck());
-
-        var experimentEntity = new ExperimentConditionEntity
-        {
-            Deck = cardEntityList
-        };
         
-        _db.Add(experimentEntity);
+        _repo.SaveExperiment(_gods.GetDeck());
         
         return _elon.ChosenCard(_mark.ChooseNumber()).CardColour
                == _mark.ChosenCard(_elon.ChooseNumber()).CardColour;

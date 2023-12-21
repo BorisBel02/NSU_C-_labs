@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Colloseum.Model.Deck;
 using DB.Entity;
 
@@ -35,5 +36,18 @@ public class CardMapper
         }
 
         return cardEntityList;
+    }
+
+    public static Card[] MapRangeCard(IEnumerable<CardEntity> cardEntities)
+    {
+        var cards = new Card[36];
+        int index = 0;
+        foreach (var entity in cardEntities)
+        {
+            cards[index] = MapCard(entity);
+            ++index;
+        }
+
+        return cards;
     }
 }

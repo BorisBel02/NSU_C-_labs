@@ -17,6 +17,7 @@ internal sealed class Program
                 services.AddScoped<IConditionExperiment, ExperimentSqlite>();
                 services.AddTransient<IFighter, Fighter>();
                 services.AddSingleton<IGods, Gods>();
+                services.AddScoped<Repo>();
                 services.AddDbContext<Context>();
             }))
             .Build()

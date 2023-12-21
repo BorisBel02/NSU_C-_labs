@@ -13,16 +13,16 @@ public class ExperimentWorkerSqlite : IHostedService
     
     private readonly IConditionExperiment _experiment;
 
-    private readonly Context _db;
+    private readonly Repo _repo;
 
     public ExperimentWorkerSqlite(
         IHostApplicationLifetime lifetime,
         IConditionExperiment experiment,
-        Context db)
+        Repo repo)
     {
         _appLifeTime = lifetime;
         _experiment = experiment;
-        _db = db;
+        _repo = repo;
     }
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -40,35 +40,18 @@ public class ExperimentWorkerSqlite : IHostedService
                     }
                 }
 
-                _db.SaveChanges();
                 Console.WriteLine("Wins = " + wins + " Iterations = " + iterations);
                 Console.WriteLine("P = " + wins / iterations);
 
-                var savedExperiment = _db.Experiments.Find(99);
-
-                if (savedExperiment == null)
+                var deck = _repo.GetCondition(99);
+                if (deck == null)
                 {
-                    Console.WriteLine("no Experiment 100 in DB");
                     throw new TaskCanceledException();
                 }
 
-                var deck = new Card[36];
-
-                int iteration = 0;
-                foreach (var cardEntity in savedExperiment.Deck)
-                {
-                    deck[iteration] = CardMapper.MapCard(cardEntity);
-                    ++iteration;
-                }
-
-                if (_experiment.RunCondition(deck))
-                {
-                    Console.WriteLine("saved experiment success");
-                }
-                else
-                {
-                    Console.WriteLine("saved experiment failed");
-                }
+                Console.WriteLine(_experiment.RunCondition(deck)
+                    ? "saved experiment success"
+                    : "saved experiment failed");
             }
             catch (TaskCanceledException){}
             catch (Exception e)
@@ -77,7 +60,6 @@ public class ExperimentWorkerSqlite : IHostedService
             }
             finally
             {
-                
                 _appLifeTime.StopApplication();
             }
         });
