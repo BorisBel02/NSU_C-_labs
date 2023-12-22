@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Text;
 using Col.DB;
 using Colloseum.Model.Deck;
+using DB.Mapper;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Features;
 using Newtonsoft.Json;
 
@@ -32,7 +34,8 @@ public class GodsService : IHostedService
         {
             generateConditions(_iterationsQty);
 
-            var win = 0;
+            float win = 0;
+            Object locker = new();
             for (int i = 0; i < _iterationsQty; i++)
             {
                 var condition = _repo.GetCondition(i + 1);
@@ -60,11 +63,13 @@ public class GodsService : IHostedService
                 if (elonCards[markNum].CardColour == markCards[elonNum].CardColour)
                 {
                     Console.WriteLine($"iteration {i} win");
+                    
                     ++win;
+                    
                 }
             }
             
-            Console.WriteLine($"P = {win / _iterationsQty}");
+            Console.WriteLine($"wins = {win}, iterations = {_iterationsQty}\nP = {win / _iterationsQty}");
             
         });
 
@@ -86,13 +91,13 @@ public class GodsService : IHostedService
         }
     }
 
-    private async Task<int> sendCardsAsync(Card[] cards, int port)
+    private async Task<int> sendCardsAsync(IEnumerable<Card> cards, int port)
     {
         using var client = new HttpClient();
-        var json = JsonConvert.SerializeObject(cards);
+        var json = JsonConvert.SerializeObject(CardMapper.MapRangeCardDto(cards));
         HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        using var response = await client.PostAsync($"https://localhost:{port}/cards", content);
+        using var response = await client.PostAsync($"http://localhost:{port}/cards", content);
 
         if (response.IsSuccessStatusCode) return Convert.ToInt32(await response.Content.ReadAsStringAsync());
         

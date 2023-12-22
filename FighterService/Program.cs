@@ -7,7 +7,8 @@ public class Program
 
         var application = builder.Build();
         application.MapControllers();
-
-        await application.RunAsync($"https://localhost:{args[0]}");
+        application.UseRouting();
+        
+        await application.RunAsync($"http://localhost:{args[0]}");
     }
 }

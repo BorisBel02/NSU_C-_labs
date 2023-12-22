@@ -50,4 +50,35 @@ public class CardMapper
 
         return cards;
     }
+
+    public static CardDto MapCardDto(Card card)
+    {
+        return new CardDto
+        {
+            CardSuit = card.CardSuit,
+            CardValue = card.CardValue
+        };
+    }
+
+    public static List<CardDto> MapRangeCardDto(IEnumerable<Card> cards)
+    {
+        return cards.Select(MapCardDto).ToList();
+    }
+
+    public static Card MapCardFromDto(CardDto dto)
+    {
+        return new Card(dto.CardSuit, dto.CardValue);
+    }
+
+    public static Card[] MapRangeCardFromDto(List<CardDto> dtos)
+    {
+        var cards = new Card[dtos.Count];
+
+        for (int i = 0; i < dtos.Count; i++)
+        {
+            cards[i] = new Card(dtos[i].CardSuit, dtos[i].CardValue);
+        }
+
+        return cards;
+    }
 }
